@@ -18,8 +18,7 @@ namespace GoDAPI.Models
         [Column(TypeName = "varchar(50)")]
         public string mTwo { set; get; }
         [Required]
-        [Column(TypeName = "varchar(50)")]
-        public string winner { get; set; }
+        public int winner { get; set; }
 
         [NotMapped]
         public Move MoveOne { set; get; }

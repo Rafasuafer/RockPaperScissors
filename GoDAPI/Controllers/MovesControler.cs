@@ -43,6 +43,14 @@ namespace GoDAPI.Controllers
             return moves;
         }
 
+        [HttpGet("api/Moves/{name}")]
+        public ActionResult<Move> Get(string name) 
+        {
+            List<Move> moveList = Get().Value.ToList();
+            Move move = moveList.Where(m => m.name == name).First();
+            return move;
+        }
+
         public IEnumerable<KeyValuePair<string, string>> GetSettingMoves()
         {
             IEnumerable<KeyValuePair<string, string>> config = _configuration.GetSection("Moves").AsEnumerable();
@@ -50,16 +58,19 @@ namespace GoDAPI.Controllers
             return config;
         }
 
-        public string getWinner(Move moveOne, Move moveTwo)
+        public int getWinner(List<Move> moves)
         {
-            string winner = "Draw";
+            Move moveOne = moves[0];
+            Move moveTwo = moves[1];
+
+            int winner = (int)Game.Winners.none;
             if (moveOne.beats == moveTwo.name && moveTwo.beats != moveOne.name)
             {
-                winner = "p1";
+                winner = (int)Game.Winners.p1;
             }
             else if (moveTwo.beats == moveOne.name && moveOne.beats != moveTwo.name)
             {
-                winner = "p2";
+                winner = (int)Game.Winners.p2;
             }
 
             return winner;

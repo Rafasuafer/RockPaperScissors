@@ -40,8 +40,6 @@ namespace GoDAPI.Controllers
         }
 
         // PUT: api/Games/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> updateGame(int id, Game game)
         {
@@ -72,15 +70,22 @@ namespace GoDAPI.Controllers
         }
 
         // POST: api/Games
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Game>> newGame(Game game)
+        public async Task<ActionResult<Game>> newGame(DTOPlayers dtoP)
         {
-            _context.Games.Add(game);
+            Game newGame = new Game()
+            {
+            POne = dtoP.p1,
+            PTwo = dtoP.p2,
+            Winner = (int)Game.Winners.none,
+            ScoreOne = 0,
+            ScoreTwo = 0
+             };
+
+            _context.Games.Add(newGame);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGame", new { id = game.Id }, game);
+            return CreatedAtAction("GetGame", new { id = newGame.Id }, newGame);
         }
 
         // DELETE: api/Games/5
@@ -99,9 +104,36 @@ namespace GoDAPI.Controllers
             return game;
         }
 
-        private bool GameExists(int id)
+        public bool GameExists(int id)
         {
             return _context.Games.Any(e => e.Id == id);
         }
+
+        public async void addBattleResult(int gameId, int result) 
+        {
+            Game GameBeingPlayed = GetGame(gameId).Result.Value;
+            if (GameBeingPlayed.Winner == (int)Game.Winners.none)
+            {
+                switch (result)
+                {
+                    case (int)Game.Winners.p1:
+                        GameBeingPlayed.ScoreOne++;
+                        break;
+                    case (int)Game.Winners.p2:
+                        GameBeingPlayed.ScoreTwo++;
+                        break;
+                }
+                if (GameBeingPlayed.ScoreOne == 3)
+                {
+                    GameBeingPlayed.Winner = (int)Game.Winners.p1;
+                }
+                else if(GameBeingPlayed.ScoreTwo == 3)
+                {
+                    GameBeingPlayed.Winner = (int)Game.Winners.p2;
+                }
+                await updateGame(gameId, GameBeingPlayed);
+            }
+        }
+
     }
 }

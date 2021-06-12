@@ -17,8 +17,8 @@ namespace GoDAPI.Models
         [Column(TypeName = "varchar(50)")]
         public string PTwo { get; set; }
 
-        [Column(TypeName = "varchar(50)")]
-        public string Winner { get; set; }
+        [Required]
+        public int Winner { get; set; }
 
         [Required]
         public int ScoreOne { get; set; }
@@ -27,5 +27,12 @@ namespace GoDAPI.Models
         public int ScoreTwo { get; set; }
 
         public List<Battle> Battles { get; set; }
+        public enum Winners
+        {
+            none = 0,
+            p1 = 1,
+            p2 = 2
+        }
+
     }
 }

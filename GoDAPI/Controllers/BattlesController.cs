@@ -14,11 +14,14 @@ namespace GoDAPI.Controllers
     {
         private readonly AppDbContext _context;
         private MovesController movesController;
+        private GamesController gamesController;
 
         public BattlesController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
             movesController = new MovesController(configuration);
+            gamesController = new GamesController(context);
+
         }
 
         // GET: api/Battles
@@ -43,8 +46,6 @@ namespace GoDAPI.Controllers
         }
 
         // PUT: api/Battles/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> updateBattle(int id, Battle battle)
         {
@@ -75,17 +76,44 @@ namespace GoDAPI.Controllers
         }
 
         // POST: api/Battles
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Battle>> newBattle(Battle battle)
+        public async Task<ActionResult<Battle>> newBattle(DTOBattle dtoBattle)
         {
 
-            battle.winner = movesController.getWinner(battle.MoveOne, battle.MoveTwo);
-            _context.Battles.Add(battle);
-            await _context.SaveChangesAsync();
+            Battle nBattle = new Battle()
+            {
+                GameId = dtoBattle.gameId,
+                mOne = dtoBattle.moveOne,
+                mTwo = dtoBattle.moveTwo,
+                MoveOne = movesController.Get(dtoBattle.moveOne).Value,
+                MoveTwo = movesController.Get(dtoBattle.moveTwo).Value
+            };
+            
+            try
+            {
+                if (gamesController.GameExists(dtoBattle.gameId))
+                {
+                    
+                    List<Move> moves = new List<Move>();
+                    moves.Add(nBattle.MoveOne);
+                    moves.Add(nBattle.MoveTwo);
+                    
+                    nBattle.winner = movesController.getWinner(moves);
 
-            return CreatedAtAction("GetBattle", new { id = battle.Id }, battle);
+                    _context.Battles.Add(nBattle);
+                    await _context.SaveChangesAsync();
+                    gamesController.addBattleResult(nBattle.GameId, nBattle.winner);
+
+                    return CreatedAtAction("GetBattle", new { id = nBattle.Id }, nBattle);
+                }
+                return NotFound("#ERROR: Game not found");
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         // DELETE: api/Battles/5
