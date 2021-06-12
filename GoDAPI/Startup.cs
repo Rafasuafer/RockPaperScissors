@@ -21,6 +21,8 @@ namespace GoDAPI
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("GODConnection")));
+            services.AddCors(options => options.AddPolicy("AllowWebApp", 
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
             services.AddControllers();
         }
 
@@ -31,6 +33,7 @@ namespace GoDAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllowWebApp");
 
             app.UseHttpsRedirection();
 
