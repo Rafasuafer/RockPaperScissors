@@ -33,16 +33,9 @@ namespace GoDAPI.Controllers
 
         // GET: api/Battles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Battle>> GetBattle(int id)
+        public async Task<ActionResult<IEnumerable<Battle>>> GetBattles(int id)
         {
-            var battle = await _context.Battles.FindAsync(id);
-
-            if (battle == null)
-            {
-                return NotFound();
-            }
-
-            return battle;
+            return await _context.Battles.Where(b => b.GameId == id).ToListAsync();
         }
 
         // PUT: api/Battles/5

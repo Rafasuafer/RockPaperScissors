@@ -1,4 +1,4 @@
-<p>System {{getState()}}</p>
+<p>System STATE:{{getState()}} GAME: {{getGame().id}}</p>
 <app-start *ngIf="getState() === 'START'"></app-start>
 <app-game *ngIf="getState() === 'GAME'" ></app-game>
 <app-winner *ngIf="getState() === 'END'"></app-winner>

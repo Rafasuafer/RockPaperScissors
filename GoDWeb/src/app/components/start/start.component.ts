@@ -1,7 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DTOPlayers } from 'src/app/models/DTOPlayers';
+import { IGame } from 'src/app/models/IGame';
 import { ApiService } from 'src/app/services/api.service';
+import { DataService } from 'src/app/services/data.service';
+
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -10,13 +13,9 @@ import { ApiService } from 'src/app/services/api.service';
 export class StartComponent {
   
   startForm: FormGroup;
+  game: IGame;
 
-  @Output() messageEvent = new EventEmitter();
-  @Output() gameMessage = new EventEmitter();
-  
-  message: string;
-
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService) 
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private dataService: DataService) 
   {
     this.startForm = this.formBuilder.group({
       id: 0,
@@ -27,13 +26,9 @@ export class StartComponent {
 
   newGame(){
     this.createGame();
-    this.message = "GAME";
-    this.sendMessage();
+    this.dataService.setState("GAME");
   }
-  sendMessage()
-  {
-    this.messageEvent.emit(this.message);
-  }
+ 
   createGame()
   {
     const DTO: DTOPlayers =
@@ -42,9 +37,7 @@ export class StartComponent {
       p2: this.startForm.get("pTwo").value,
     }
 
-    this.apiService.newGame(DTO).subscribe(data => {
-      console.log(data);
-    });
+    this.apiService.newGame(DTO);
     this.startForm.reset();
   }
 }

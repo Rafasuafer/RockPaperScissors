@@ -24,4 +24,9 @@ export class SystemComponent{
     return this.dataService.getState();
   }
 
+  public getGame(): IGame
+  {
+    return this.dataService.getGame();
+  }
+
 }

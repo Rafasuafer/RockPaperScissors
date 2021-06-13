@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IBattle } from '../models/IBattle';
 import { IGame } from '../models/IGame';
 
 @Injectable({
@@ -6,15 +7,16 @@ import { IGame } from '../models/IGame';
 })
 export class DataService {
 
-  gameState: string = "START";
-  game: IGame = {
-    id: null,
+  private gameState: string = "START";
+  private game: IGame = {
+    id: 0,
     pOne:null,
     pTwo:null,
     scoreOne: 0,
     scoreTwo: 0,
     winner: null
-  };;
+  };
+  private battles: IBattle[];
 
   getState():string
   {
@@ -50,6 +52,18 @@ export class DataService {
     };
   }
 
+  getBattles()
+  {
+    return this.battles;
+  }
+  setBattles(bList: IBattle[])
+  {
+    this.battles = bList;
+  }
+  resetBattles()
+  {
+    this.battles = []
+  }
   
 
   constructor() { }
