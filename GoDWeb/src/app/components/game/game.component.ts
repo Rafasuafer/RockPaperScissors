@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent{
 
-  constructor() { }
+  @Output() messageEvent = new EventEmitter();
+  message: string = "GAME";
 
-  ngOnInit(): void {
+  sendMessage()
+  {
+    this.messageEvent.emit(this.message);
   }
-
+  constructor() { }
 }

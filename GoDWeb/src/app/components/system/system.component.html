@@ -1,4 +1,4 @@
-<p>System {{gameState}}</p>
-<app-start *ngIf="gameState === 'START'" (messageEvent)="receiveMessage($event)"></app-start>
-<app-game *ngIf="gameState === 'GAME'"></app-game>
-<app-winner *ngIf="gameState === 'END'"></app-winner>
+<p>System {{getState()}}</p>
+<app-start *ngIf="getState() === 'START'"></app-start>
+<app-game *ngIf="getState() === 'GAME'" ></app-game>
+<app-winner *ngIf="getState() === 'END'"></app-winner>

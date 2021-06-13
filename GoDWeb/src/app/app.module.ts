@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from  '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { ScoreComponent } from './components/score/score.component';
 import { StartComponent } from './components/start/start.component';
 import { RoundComponent } from './components/round/round.component';
 import { WinnerComponent } from './components/winner/winner.component';
 import { GameComponent } from './components/game/game.component';
 import { SystemComponent } from './components/system/system.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { SystemComponent } from './components/system/system.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
