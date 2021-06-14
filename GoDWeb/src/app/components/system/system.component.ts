@@ -9,24 +9,9 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class SystemComponent{
 
-  constructor(private dataService: DataService)
+  constructor(public dataService: DataService)
   {
       this.dataService;
   };
-
-  public setState(state:string)
-    {
-      this.dataService.setState(state);
-    }
-
-  public getState():string
-  {
-    return this.dataService.getState();
-  }
-
-  public getGame(): IGame
-  {
-    return this.dataService.getGame();
-  }
 
 }

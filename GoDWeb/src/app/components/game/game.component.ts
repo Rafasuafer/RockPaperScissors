@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component} from '@angular/core';
 
 
 @Component({
@@ -7,13 +7,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent{
-
-  @Output() messageEvent = new EventEmitter();
-  message: string = "GAME";
-
-  sendMessage()
-  {
-    this.messageEvent.emit(this.message);
-  }
   constructor() { }
 }

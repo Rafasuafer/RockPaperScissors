@@ -36,7 +36,7 @@ export class StartComponent {
       p1: this.startForm.get("pOne").value,
       p2: this.startForm.get("pTwo").value,
     }
-
+    this.apiService.getMoves();
     this.apiService.newGame(DTO);
     this.startForm.reset();
   }

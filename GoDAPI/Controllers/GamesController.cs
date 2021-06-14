@@ -109,7 +109,7 @@ namespace GoDAPI.Controllers
             return _context.Games.Any(e => e.Id == id);
         }
 
-        public async void addBattleResult(int gameId, int result) 
+        public async Task addBattleResult(int gameId, int result) 
         {
             Game GameBeingPlayed = GetGame(gameId).Result.Value;
             if (GameBeingPlayed.Winner == (int)Game.Winners.none)

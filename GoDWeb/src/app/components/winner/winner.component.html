@@ -1,6 +1,7 @@
 <div class="card">
     <h1>WINNER</h1>
     <p class="text-center">We have a WINNER!!</p>
-    <p class="text-center">[Player] is the new EMPEROR!</p>
+    <p class="text-center" *ngIf="this.dataService.getGame().winner === 1">{{this.dataService.getGame().pOne}} is the new EMPEROR!</p>
+    <p class="text-center" *ngIf="this.dataService.getGame().winner === 2">{{this.dataService.getGame().pTwo}} is the new EMPEROR!</p>
     <button type="button"class="btn btn-outline-primary">Replay</button>
 </div>

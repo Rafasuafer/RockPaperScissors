@@ -5,6 +5,7 @@ import { DTOBattle } from '../models/DTOBattle';
 import { DTOPlayers } from '../models/DTOPlayers';
 import { IBattle } from '../models/IBattle';
 import { IGame } from '../models/IGame';
+import { IMove } from '../models/IMove';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -14,6 +15,7 @@ export class ApiService {
   appUrl = 'https://localhost:44394/';
   games = 'api/Games/';
   battles = 'api/Battles';
+  moves = 'api/Moves';
 
   constructor(private http: HttpClient, private dataService: DataService) {  }
 
@@ -24,16 +26,31 @@ export class ApiService {
     });
   }
 
+  async getGame(id: number)
+  {
+    let response: IGame = await
+     this.http.get<IGame>(this.appUrl+this.games + id, {responseType: "json"}).toPromise();
+
+    return response;
+  }
+
   newBattle(DTO: DTOBattle)
   {
-    return this.http.post<string>(this.appUrl+this.battles, DTO, {responseType: "json"}).subscribe(data => {
-      console.log(data);
+    return this.http.post<DTOBattle>(this.appUrl+this.battles, DTO, {responseType: "json"}).subscribe(data => {
+      this.getBattles(data.gameId);
     });
   }
 
-  getBattles(gameId: number)
+  async getBattles(gameId: number)
   {
-    this.http.get<IBattle[]>(this.appUrl+this.battles+'/'+gameId).toPromise()
-      .then( data => this.dataService.setBattles(data));
+    let response: IBattle [] = await
+     this.http.get<IBattle[]>(this.appUrl+this.battles+'/'+gameId).toPromise();
+
+    return response;
+  }
+
+  getMoves()
+  {
+    return this.http.get<IMove[]>(this.appUrl+this.moves).toPromise().then(data =>{this.dataService.setMoves(data);});
   }
 }

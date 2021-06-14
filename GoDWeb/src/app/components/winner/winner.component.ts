@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-winner',
@@ -6,14 +7,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./winner.component.css']
 })
 export class WinnerComponent{
-
-  @Output() messageEvent = new EventEmitter();
-  message: string = "GAME"
-
-  constructor() { }
-
-  sendMessage()
-  {
-    this.messageEvent.emit(this.message);
-  }
+  constructor(public dataService: DataService) { }
 }

@@ -5,5 +5,5 @@ export interface IGame
     pTwo: string;
     scoreOne: number;
     scoreTwo: number;
-    winner: string;
+    winner: number;
 }
