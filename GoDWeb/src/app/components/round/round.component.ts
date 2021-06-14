@@ -32,7 +32,7 @@ export class RoundComponent implements OnInit {
   async updateBattles()
   {
     await this.apiService.getBattles(this.dataService.getGame().id);
-    this.dataService.setBattles( await this.apiService.getBattles(this.dataService.getGame().id));
+    await this.dataService.setBattles( await this.apiService.getBattles(this.dataService.getGame().id));
   }
 
   updateTurn()
@@ -54,12 +54,10 @@ export class RoundComponent implements OnInit {
     this.DTO.gameId = this.dataService.getGame().id;
     if (this.turn === 1) 
     {
-      console.log("UPDATING MOVE ONE");
       this.DTO.moveOne = this.roundForm.get("moveSelect").value;
     }
     else
     {
-      console.log("UPDATING MOVE TWO");
       this.DTO.moveTwo = this.roundForm.get("moveSelect").value;
     }
   }
@@ -68,7 +66,6 @@ export class RoundComponent implements OnInit {
   {
     this.apiService.getMoves();
     this.updateDTO();
-    console.log("ROUND P1: " + this.DTO.moveOne + " | P2 " + this.DTO.moveTwo);
     this.sendDTO();
     await this.updateBattles();
     await this.updateGame();
@@ -77,13 +74,10 @@ export class RoundComponent implements OnInit {
 
   async updateGame()
   {
-    console.log("Updating game");
-    this.dataService.setGame( await this.apiService.getGame(this.dataService.getGame().id));
-    console.log("Game Winner: " + this.dataService.getGame().winner);
+    await this.dataService.setGame( await this.apiService.getGame(this.dataService.getGame().id));
 
     if (this.dataService.getGame().winner != 0) 
     {
-      console.log("SHOULD BE HERE");
       this.dataService.setState("END");  
     }
   }
@@ -92,7 +86,6 @@ export class RoundComponent implements OnInit {
   {
     if(this.turn === 2)
     {
-      console.log("SENDING DTO")
       this.apiService.newBattle(this.DTO);
     }
   }

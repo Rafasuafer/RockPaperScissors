@@ -12,7 +12,7 @@ import { DataService } from './data.service';
   providedIn: 'root'
 })
 export class ApiService {
-  appUrl = 'https://localhost:44394/';
+  appUrl = 'https://rockpaperservice.azurewebsites.net/';
   games = 'api/Games/';
   battles = 'api/Battles';
   moves = 'api/Moves';
