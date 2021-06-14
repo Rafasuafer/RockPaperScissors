@@ -1,7 +1,11 @@
-<div class="card">
-    <h1>WINNER</h1>
-    <p class="text-center">We have a WINNER!!</p>
-    <p class="text-center" *ngIf="this.dataService.getGame().winner === 1">{{this.dataService.getGame().pOne}} is the new EMPEROR!</p>
-    <p class="text-center" *ngIf="this.dataService.getGame().winner === 2">{{this.dataService.getGame().pTwo}} is the new EMPEROR!</p>
-    <button type="button"class="btn btn-outline-primary">Replay</button>
+<div class="text-center" >
+    <p>We have a WINNER!!</p>
+    <div *ngIf="this.dataService.getGame().winner === 1; else two">
+        <p><b>{{this.dataService.getGame().pOne}}</b> is the new EMPEROR!</p>
+    </div>
+    <ng-template #two>
+        <p><b>{{this.dataService.getGame().pTwo}}</b> is the new EMPEROR!</p>
+    </ng-template>
+    
+    <button type="button"class="btn btn-outline-primary w-25" (click)="replay()">Replay</button>
 </div>

@@ -1,4 +1,3 @@
-<p>System STATE:{{this.dataService.getState()}} GAME: {{this.dataService.getGame().id}}</p>
 <app-start *ngIf="this.dataService.getState() === 'START'"></app-start>
 <app-game *ngIf="this.dataService.getState() === 'GAME'"></app-game>
 <app-winner *ngIf="this.dataService.getState() === 'END'"></app-winner>

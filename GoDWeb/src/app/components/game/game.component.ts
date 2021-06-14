@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -7,5 +8,5 @@ import { Component} from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent{
-  constructor() { }
+  constructor(public dataService: DataService) { }
 }

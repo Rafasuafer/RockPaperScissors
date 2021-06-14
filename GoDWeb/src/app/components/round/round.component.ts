@@ -22,11 +22,11 @@ export class RoundComponent implements OnInit {
       id: 0,
       moveSelect: ['', [Validators.required]]
     });
-
     this.DTO = {gameId: 0,moveOne: "", moveTwo: ""};
   }
 
   ngOnInit(): void {
+    this.roundForm.reset();
   }
 
   async updateBattles()

@@ -8,4 +8,12 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class WinnerComponent{
   constructor(public dataService: DataService) { }
+
+  public replay()
+  {
+    this.dataService.resetGame();
+    this.dataService.resetBattles();
+    this.dataService.resetMoves();
+    this.dataService.resetState();
+  }
 }

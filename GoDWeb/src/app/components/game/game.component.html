@@ -1,12 +1,11 @@
-<div class="card">
-    <h1>GAME</h1>
+<div>
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-md-auto">
                 <app-round></app-round>
             </div>
             
-            <div class="col col-md-auto">
+            <div class="col col-md-auto" *ngIf="this.dataService.getBattles().length != 0">
                 <app-score></app-score>
             </div>
         </div>

@@ -1,16 +1,17 @@
-<div class="card">
+<div>
     <h1>ROUND {{getRoundNum()}}</h1>
-    <p>Player {{getTurn()}} {{getName()}}</p>
+    <p>Player {{getTurn()}}: <b>{{getName()}}</b></p>
 
-    <form [formGroup]="roundForm" (ngSubmit)="updateRound()">
+    <form [formGroup]="roundForm" (ngSubmit)="updateRound()" class="w-100">
         <div class="form-group">
             <select name="Moves" class="form-control" formControlName="moveSelect" class="form-select form-select-sm">
+                <option [ngValue]="null" [disabled]="true" >What's your move?</option>
                 <option *ngFor="let m of getMoves()">{{m.name}}</option>
             </select>
         </div>
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-secondary" [disabled]="roundForm.invalid">OK</button>
+        <div class="form-group m-2">
+            <button type="submit" class="btn btn-success" [disabled]="roundForm.invalid">OK</button>
         </div>
     </form>
 </div>
