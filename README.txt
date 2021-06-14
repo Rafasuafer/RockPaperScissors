@@ -5,3 +5,4 @@ For web app: localhost:4200
 
 For web api: localhost:44394 
 * The api port depends on running from IIS Express or GoDAPI, I've used IIS Express.
+* You can edit the api URL on GoDWeb\src\app\services\api.service.ts, change appUrl value.
